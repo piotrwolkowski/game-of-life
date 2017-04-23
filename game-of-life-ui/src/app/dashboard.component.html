@@ -1,0 +1,21 @@
+<div class="jumbotron text-center">
+    <h1>Dashboard</h1>
+</div>
+<div class="container">
+    <div class="col-md-3">
+        <div class="btn-group row">
+            <button class="btn btn-default" (click)="gameboard.play()"><i class="fa fa-play" aria-hidden="true"></i></button>
+            <button class="btn btn-default" (click)="gameboard.stepForward()"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+            <button class="btn btn-default" (click)="gameboard.stop()"><i class="fa fa-stop" aria-hidden="true"></i></button>
+            <button class="btn btn-default" (click)="gameboard.clean()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+            <button class="btn btn-default" (click)="gameboard.random()"><i class="fa fa-random" aria-hidden="true"></i></button>
+        </div>
+        <div class="row">
+                <input type="range" min="200" max="2000" step="100" value={{gameboard.speed}} [(ngModel)]="gameboard.speed" (change)="gameboard.refreshSpeed()"
+                />
+                <span>{{gameboard.speed}}</span>
+            
+        </div>
+    </div>
+    <my-game-board #gameboard class="col-md-9"></my-game-board>
+</div>
