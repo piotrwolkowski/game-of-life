@@ -72,11 +72,9 @@ var DashboardGameBoardComponent = (function () {
     };
     DashboardGameBoardComponent.prototype.refreshSpeed = function () {
         var _this = this;
-        if (this.sub != undefined) {
-            this.sub.unsubscribe();
-            this.timer = Rx_1.Observable.timer(0, this.speed);
-            this.sub = this.timer.subscribe(function (t) { return _this.tickerFunc(t); });
-        }
+        this.unsubscribe();
+        this.timer = Rx_1.Observable.timer(0, this.speed);
+        this.sub = this.timer.subscribe(function (t) { return _this.tickerFunc(t); });
     };
     DashboardGameBoardComponent.prototype.play = function () {
         var _this = this;
@@ -89,9 +87,7 @@ var DashboardGameBoardComponent = (function () {
         this.drawNext();
     };
     DashboardGameBoardComponent.prototype.stop = function () {
-        if (this.sub != undefined) {
-            this.sub.unsubscribe();
-        }
+        this.unsubscribe();
     };
     DashboardGameBoardComponent.prototype.clean = function () {
         this.stop();
@@ -104,7 +100,12 @@ var DashboardGameBoardComponent = (function () {
     DashboardGameBoardComponent.prototype.ngOnDestroy = function () {
         console.log("Destroy timer");
         // unsubscribe here
-        this.sub.unsubscribe();
+        this.unsubscribe();
+    };
+    DashboardGameBoardComponent.prototype.unsubscribe = function () {
+        if (this.sub != undefined) {
+            this.sub.unsubscribe();
+        }
     };
     return DashboardGameBoardComponent;
 }());

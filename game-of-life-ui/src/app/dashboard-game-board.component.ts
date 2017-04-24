@@ -7,7 +7,7 @@ import { CellStateService } from "./cell-state.service";
     templateUrl: './dashboard-game-board.component.html'
 })
 export class DashboardGameBoardComponent implements OnInit, OnDestroy {
-    
+
     board = ''
     cells: number[][];
     ticks: number;
@@ -76,11 +76,9 @@ export class DashboardGameBoardComponent implements OnInit, OnDestroy {
     }
 
     refreshSpeed(): void {
-        if (this.sub != undefined) {
-            this.sub.unsubscribe();
-            this.timer = Observable.timer(0, this.speed);
-            this.sub = this.timer.subscribe(t => this.tickerFunc(t));
-        }
+        this.unsubscribe();
+        this.timer = Observable.timer(0, this.speed);
+        this.sub = this.timer.subscribe(t => this.tickerFunc(t));
     }
 
     play(): void {
@@ -95,10 +93,7 @@ export class DashboardGameBoardComponent implements OnInit, OnDestroy {
     }
 
     stop(): void {
-        if (this.sub != undefined)
-        {
-            this.sub.unsubscribe();
-        }
+        this.unsubscribe();
     }
 
     clean(): void {
@@ -114,7 +109,13 @@ export class DashboardGameBoardComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         console.log("Destroy timer");
         // unsubscribe here
-        this.sub.unsubscribe();
+        this.unsubscribe();
+    }
+
+    private unsubscribe(): void {
+        if (this.sub != undefined) {
+            this.sub.unsubscribe();
+        }
     }
 }
 
